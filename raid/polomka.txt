@@ -1,0 +1,74 @@
+root@raiddz:/home/vagrant# mdadm -D /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Mon May 19 20:24:14 2025
+        Raid Level : raid10
+        Array Size : 2093056 (2044.00 MiB 2143.29 MB)
+     Used Dev Size : 1046528 (1022.00 MiB 1071.64 MB)
+      Raid Devices : 4
+     Total Devices : 2
+       Persistence : Superblock is persistent
+
+       Update Time : Mon May 19 20:33:18 2025
+             State : clean, degraded 
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : near=2
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : raiddz:0  (local to host raiddz)
+              UUID : e4976852:53a3f425:3e5a1e52:aa232b10
+            Events : 23
+
+    Number   Major   Minor   RaidDevice State
+       -       0        0        0      removed
+       1       8       32        1      active sync set-B   /dev/sdc
+       -       0        0        2      removed
+       3       8       64        3      active sync set-B   /dev/sde
+
+root@raiddz:/home/vagrant# mdadm --zero-superblock /dev/sdb
+root@raiddz:/home/vagrant# mdadm --zero-superblock /dev/sdd
+root@raiddz:/home/vagrant# mdadm /dev/md0 --add /dev/sdb
+mdadm: added /dev/sdb
+root@raiddz:/home/vagrant# mdadm /dev/md0 --add /dev/sdd
+mdadm: added /dev/sdd
+root@raiddz:/home/vagrant# mdadm -D /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Mon May 19 20:24:14 2025
+        Raid Level : raid10
+        Array Size : 2093056 (2044.00 MiB 2143.29 MB)
+     Used Dev Size : 1046528 (1022.00 MiB 1071.64 MB)
+      Raid Devices : 4
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Mon May 19 20:34:42 2025
+             State : clean 
+    Active Devices : 4
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : near=2
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : raiddz:0  (local to host raiddz)
+              UUID : e4976852:53a3f425:3e5a1e52:aa232b10
+            Events : 58
+
+    Number   Major   Minor   RaidDevice State
+       4       8       16        0      active sync set-A   /dev/sdb
+       1       8       32        1      active sync set-B   /dev/sdc
+       5       8       48        2      active sync set-A   /dev/sdd
+       3       8       64        3      active sync set-B   /dev/sde
+root@raiddz:/home/vagrant# 
+
+
